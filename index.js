@@ -12,7 +12,12 @@ const client = new Client({
     }
 });
 
+let qrSaved = false;
+
 client.on('qr', async (qr) => {
+    if (qrSaved) return; // ✅ QR sudah disimpan sebelumnya, lewati
+    qrSaved = true;      // ✅ Tandai bahwa QR sudah disimpan
+
     console.log('📲 QR Code diterima, scan dengan WhatsApp sekarang...');
     qrcode.generate(qr, { small: true });
 
@@ -20,26 +25,21 @@ client.on('qr', async (qr) => {
         const qrDir = path.join(__dirname, 'public');
         console.log('📁 Path folder QR:', qrDir);
 
-        // Cek folder
         if (!fs.existsSync(qrDir)) {
             fs.mkdirSync(qrDir, { recursive: true });
             console.log('📁 Folder public dibuat.');
-        } else {
-            console.log('📁 Folder public sudah ada.');
         }
 
         const filePath = path.join(qrDir, 'qr.png');
         console.log('💾 Menyimpan QR ke:', filePath);
 
-        await QRCode.toFile(filePath, qr, {
-            width: 300
-        });
-
+        await QRCode.toFile(filePath, qr, { width: 300 });
         console.log('✅ QR berhasil disimpan!');
     } catch (err) {
         console.error('❌ Gagal menyimpan QR:', err);
     }
-// <-- Ini menutup blok `client.on('qr')`
+});
+
 
 client.on('ready', () => {
     console.log('✅ Bot WhatsApp sudah siap!');
@@ -300,3 +300,4 @@ client.on('message', async (message) => {
 });
 
 client.initialize();
+
