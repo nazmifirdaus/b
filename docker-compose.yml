@@ -1,0 +1,24 @@
+
+services:
+  whatsapp-bot:
+    build: .
+    container_name: whatsapp-bot
+    ports:
+      - "3000:3000"  # Kamu bisa menyesuaikan port sesuai kebutuhan
+    volumes:
+      - .:/app
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
+    depends_on:
+      - mongodb  # jika kamu menggunakan database, misalnya MongoDB
+
+  # MongoDB jika diperlukan untuk bot (bisa dihapus jika tidak perlu)
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/db:/data/db
+    restart: unless-stopped
