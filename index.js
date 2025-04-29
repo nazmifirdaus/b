@@ -1,72 +1,44 @@
-const express = require('express');
-const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-const QRCode = require('qrcode');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
-const cron = require('node-cron');
+const QRCode = require('qrcode');
 
 const client = new Client({
-    authStrategy: new LocalAuth(),
-    puppeteer: {
-        headless: 'new', // atau true
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-    }
-});
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-let latestQRData = null;
-
-app.use(cors());
-
-// Menyajikan file statis (termasuk qr.png)
-app.use('/static', express.static(path.join(__dirname)));
-
-app.get('/qr', (req, res) => {
-    const qrPath = path.join(__dirname, 'public', 'qr.png');
-    if (fs.existsSync(qrPath)) {
-        res.sendFile(qrPath);
-    } else {
-        res.status(404).send('QR belum tersedia.');
-    }
+    authStrategy: new LocalAuth()
 });
 
-
-app.listen(3000, () => {
-    console.log('Server berjalan di http://localhost:3000');
-});
-
-app.listen(PORT, () => {
-    console.log(`📡 Express aktif di port ${PORT}`);
-});
-
-
-const TARGET_CHAT_ID = '6285694193698@c.us';
-
-client.on('qr', (qr) => {
-    console.log('📲 QR Code siap, silakan scan');
+client.on('qr', async (qr) => {
+    console.log('📲 QR Code diterima, scan dengan WhatsApp sekarang...');
     qrcode.generate(qr, { small: true });
 
-    // Pastikan folder ada
-    const qrDir = path.join(__dirname, 'public');
-    if (!fs.existsSync(qrDir)) {
-        fs.mkdirSync(qrDir, { recursive: true });
+    try {
+        const qrDir = path.join(__dirname, 'public');
+        console.log('📁 Path folder QR:', qrDir);
+
+        // Cek folder
+        if (!fs.existsSync(qrDir)) {
+            fs.mkdirSync(qrDir, { recursive: true });
+            console.log('📁 Folder public dibuat.');
+        } else {
+            console.log('📁 Folder public sudah ada.');
+        }
+
+        const filePath = path.join(qrDir, 'qr.png');
+        console.log('💾 Menyimpan QR ke:', filePath);
+
+        await QRCode.toFile(filePath, qr, {
+            width: 300
+        });
+
+        console.log('✅ QR berhasil disimpan!');
+    } catch (err) {
+        console.error('❌ Gagal menyimpan QR:', err);
     }
 
-    QRCode.toFile(path.join(qrDir, 'qr.png'), qr, {
-        width: 300
-    }, function (err) {
-        if (err) {
-            console.error('❌ Gagal menyimpan QR:', err.message);
-        } else {
-            console.log('🖼️ QR Code berhasil disimpan!');
-        }
-    });
-});
 client.on('ready', () => {
-    console.log('✅ bot siap digunakan!');
+    console.log('✅ Bot WhatsApp sudah siap!');
+});
 
     cron.schedule('0 5 * * *', () => {
         setTimeout(() => {
