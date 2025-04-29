@@ -45,12 +45,11 @@ client.on('ready', () => {
     console.log('✅ Bot WhatsApp sudah siap!');
 });
 
+cron.schedule('0 5 * * *', () => {
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'selamat pagiii sayangg 😘 semangat ya harinya, aku tahu hari ini bakal jadi hari yang seru banget buat kamu! 🥳');
+    }, 5000);
 });
-    cron.schedule('0 5 * * *', () => {
-        setTimeout(() => {
-            client.sendMessage(TARGET_CHAT_ID, 'selamat pagiii sayangg 😘 semangat ya harinya, aku tahu hari ini bakal jadi hari yang seru banget buat kamu! 🥳');
-        }, 5000);
-    });
 
     cron.schedule('47 11 * * *', () => {
         setTimeout(() => {
