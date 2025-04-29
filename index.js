@@ -1,3 +1,8 @@
+const express = require('express');
+const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
+const QRCode = require('qrcode');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const cron = require('node-cron');
@@ -9,12 +14,52 @@ const client = new Client({
         args: ['--no-sandbox', '--disable-setuid-sandbox']
     }
 });
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+let latestQRData = null;
+
+app.use(cors());
+
+// Menyajikan file statis (termasuk qr.png)
+app.use('/static', express.static(path.join(__dirname)));
+
+// Endpoint untuk menampilkan file QR PNG
+app.get('/qr', (req, res) => {
+    if (latestQRData) {
+        QRCode.toFile('qr.png', latestQRData, {
+            width: 300
+        }, function (err) {
+            if (err) console.error('❌ Gagal menyimpan QR:', err.message);
+            else {
+                res.sendFile(path.join(__dirname, 'qr.png'));
+            }
+        });
+    } else {
+        res.status(404).send('QR belum tersedia.');
+    }
+});
+
+app.listen(PORT, () => {
+    console.log(`📡 Express aktif di port ${PORT}`);
+});
+
 
 const TARGET_CHAT_ID = '6285694193698@c.us';
 
 client.on('qr', (qr) => {
     console.log('🔍 scan qr di whatsapp kamu:');
     qrcode.generate(qr, { small: true });
+    
+     latestQRData = qr; // simpan QR terbaru
+});
+    // Simpan QR sebagai gambar PNG
+    QRCode.toFile('qr.png', qr, {
+        width: 300
+    }, function (err) {
+        if (err) console.error('❌ Gagal menyimpan QR:', err.message);
+        else console.log('🖼️ QR juga tersimpan di /qr');
+    });
 });
 
 client.on('ready', () => {
