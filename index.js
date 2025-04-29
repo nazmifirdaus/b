@@ -22,7 +22,7 @@ client.on('qr', (qr) => {
     console.log('📲 QR Code diterima, scan dengan WhatsApp sekarang...');
     qrcode.generate(qr, { small: true }); // tampilkan QR sebagai ASCII
 });
-
+    
     try {
         const qrDir = path.join(__dirname, 'public');
         console.log('📁 Path folder QR:', qrDir);
@@ -40,7 +40,6 @@ client.on('qr', (qr) => {
     } catch (err) {
         console.error('❌ Gagal menyimpan QR:', err);
     }
-});
 
 
 client.on('ready', () => {
