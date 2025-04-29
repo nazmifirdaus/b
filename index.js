@@ -8,7 +8,6 @@ const cron = require('node-cron');
 require('dotenv').config();
 const TARGET_CHAT_ID = process.env.TARGET_CHAT_ID;
 
-
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
@@ -21,31 +20,32 @@ client.on('qr', (qr) => {
     console.clear(); // bersihkan terminal agar QR tampil rapi
     console.log('📲 QR Code diterima, scan dengan WhatsApp sekarang...');
     qrcode.generate(qr, { small: true }); // tampilkan QR sebagai ASCII
-});
-    
-    try {
-        const qrDir = path.join(__dirname, 'public');
-        console.log('📁 Path folder QR:', qrDir);
 
-        if (!fs.existsSync(qrDir)) {
-            fs.mkdirSync(qrDir, { recursive: true });
-            console.log('📁 Folder public dibuat.');
+    // Menyimpan QR code ke file setelah berhasil diterima
+    (async () => {
+        try {
+            const qrDir = path.join(__dirname, 'public');
+            console.log('📁 Path folder QR:', qrDir);
+
+            if (!fs.existsSync(qrDir)) {
+                fs.mkdirSync(qrDir, { recursive: true });
+                console.log('📁 Folder public dibuat.');
+            }
+
+            const filePath = path.join(qrDir, 'qr.png');
+            console.log('💾 Menyimpan QR ke:', filePath);
+
+            await QRCode.toFile(filePath, qr, { width: 300 });
+            console.log('✅ QR berhasil disimpan!');
+        } catch (err) {
+            console.error('❌ Gagal menyimpan QR:', err);
         }
-
-        const filePath = path.join(qrDir, 'qr.png');
-        console.log('💾 Menyimpan QR ke:', filePath);
-
-        await QRCode.toFile(filePath, qr, { width: 300 });
-        console.log('✅ QR berhasil disimpan!');
-    } catch (err) {
-        console.error('❌ Gagal menyimpan QR:', err);
-    }
-
+    })();
+});
 
 client.on('ready', () => {
     console.log('✅ Bot WhatsApp sudah siap!');
 });
-
 cron.schedule('0 5 * * *', () => {
     setTimeout(() => {
         client.sendMessage(TARGET_CHAT_ID, 'selamat pagiii sayangg 😘 semangat ya harinya, aku tahu hari ini bakal jadi hari yang seru banget buat kamu! 🥳');
