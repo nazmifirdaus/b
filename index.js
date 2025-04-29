@@ -24,20 +24,18 @@ app.use(cors());
 // Menyajikan file statis (termasuk qr.png)
 app.use('/static', express.static(path.join(__dirname)));
 
-// Endpoint untuk menampilkan file QR PNG
 app.get('/qr', (req, res) => {
-    if (latestQRData) {
-        QRCode.toFile('qr.png', latestQRData, {
-            width: 300
-        }, function (err) {
-            if (err) console.error('❌ Gagal menyimpan QR:', err.message);
-            else {
-                res.sendFile(path.join(__dirname, 'qr.png'));
-            }
-        });
+    const qrPath = path.join(__dirname, 'public', 'qr.png');
+    if (fs.existsSync(qrPath)) {
+        res.sendFile(qrPath);
     } else {
         res.status(404).send('QR belum tersedia.');
     }
+});
+
+
+app.listen(3000, () => {
+    console.log('Server berjalan di http://localhost:3000');
 });
 
 app.listen(PORT, () => {
@@ -52,12 +50,16 @@ client.on('qr', (qr) => {
     qrcode.generate(qr, { small: true });
 
     // Pastikan qr sudah didefinisikan di sini
-    QRCode.toFile('qr.png', qr, {
-        width: 300
-    }, function (err) {
-        if (err) console.error('❌ Gagal menyimpan QR:', err.message);
-        else console.log('🖼️ QR juga tersimpan di /qr');
-    });
+  QRCode.toFile(path.join(__dirname, 'public', 'qr.png'), qrData, {
+    width: 300
+}, function (err) {
+    if (err) {
+        console.error('❌ Gagal menyimpan QR:', err.message);
+    } else {
+        console.log('🖼️ QR Code berhasil disimpan!');
+    }
+});
+
 });
 
 client.on('ready', () => {
