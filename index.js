@@ -44,13 +44,11 @@ app.listen(PORT, () => {
 
 
 const TARGET_CHAT_ID = '6285694193698@c.us';
-
-client.on('qr', (qr) => {
-    console.log('🔍 scan qr di whatsapp kamu:');
-    qrcode.generate(qr, { small: true });
-
-    // Pastikan qr sudah didefinisikan di sini
-  QRCode.toFile(path.join(__dirname, 'public', 'qr.png'), qrData, {
+const qrDir = path.join(__dirname, 'public');
+if (!fs.existsSync(qrDir)) {
+    fs.mkdirSync(qrDir);
+}
+QRCode.toFile(path.join(qrDir, 'qr.png'), qr, {
     width: 300
 }, function (err) {
     if (err) {
