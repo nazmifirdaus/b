@@ -50,16 +50,15 @@ const TARGET_CHAT_ID = '6285694193698@c.us';
 client.on('qr', (qr) => {
     console.log('🔍 scan qr di whatsapp kamu:');
     qrcode.generate(qr, { small: true });
-    
-     latestQRData = qr; // simpan QR terbaru
-});
-    // Simpan QR sebagai gambar PNG
+
+    // Pastikan qr sudah didefinisikan di sini
     QRCode.toFile('qr.png', qr, {
         width: 300
     }, function (err) {
         if (err) console.error('❌ Gagal menyimpan QR:', err.message);
         else console.log('🖼️ QR juga tersimpan di /qr');
     });
+});
 
 client.on('ready', () => {
     console.log('✅ bot siap digunakan!');
