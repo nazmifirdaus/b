@@ -5,6 +5,10 @@ const qrcode = require('qrcode-terminal');
 const QRCode = require('qrcode');
 const cron = require('node-cron');
 
+require('dotenv').config();
+const TARGET_CHAT_ID = process.env.TARGET_CHAT_ID;
+
+
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
@@ -80,7 +84,6 @@ cron.schedule('0 5 * * *', () => {
             client.sendMessage(TARGET_CHAT_ID, 'good night yaaa 💗 have a sweet dream 😴 semoga tidurmu nyenyak dan bangun besok lebih bahagia!');
         }, 5000);
     });
-});
 
 client.on('message', async (message) => {
     console.log('📩 pesan masuk:', message.body);
