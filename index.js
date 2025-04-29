@@ -39,10 +39,12 @@ client.on('qr', async (qr) => {
     } catch (err) {
         console.error('❌ Gagal menyimpan QR:', err);
     }
-});
+}); // <-- Ini menutup blok `client.on('qr')`
 
 client.on('ready', () => {
     console.log('✅ Bot WhatsApp sudah siap!');
+});
+
 });
     cron.schedule('0 5 * * *', () => {
         setTimeout(() => {
