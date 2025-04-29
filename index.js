@@ -60,7 +60,6 @@ client.on('qr', (qr) => {
         if (err) console.error('❌ Gagal menyimpan QR:', err.message);
         else console.log('🖼️ QR juga tersimpan di /qr');
     });
-});
 
 client.on('ready', () => {
     console.log('✅ bot siap digunakan!');
