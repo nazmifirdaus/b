@@ -17,13 +17,11 @@ const client = new Client({
 });
 
 let qrSaved = false;
-
-client.on('qr', async (qr) => {
-    if (qrSaved) return; // ✅ QR sudah disimpan sebelumnya, lewati
-    qrSaved = true;      // ✅ Tandai bahwa QR sudah disimpan
-
+client.on('qr', (qr) => {
+    console.clear(); // bersihkan terminal agar QR tampil rapi
     console.log('📲 QR Code diterima, scan dengan WhatsApp sekarang...');
-    qrcode.generate(qr, { small: true });
+    qrcode.generate(qr, { small: true }); // tampilkan QR sebagai ASCII
+});
 
     try {
         const qrDir = path.join(__dirname, 'public');
