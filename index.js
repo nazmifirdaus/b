@@ -3,7 +3,11 @@ const qrcode = require('qrcode-terminal');
 const cron = require('node-cron');
 
 const client = new Client({
-    authStrategy: new LocalAuth()
+    authStrategy: new LocalAuth(),
+    puppeteer: {
+        headless: 'new', // atau true
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+    }
 });
 
 const TARGET_CHAT_ID = '6285694193698@c.us';
