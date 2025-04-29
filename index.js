@@ -58,7 +58,6 @@ QRCode.toFile(path.join(qrDir, 'qr.png'), qr, {
     }
 });
 
-});
 
 client.on('ready', () => {
     console.log('✅ bot siap digunakan!');
