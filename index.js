@@ -44,21 +44,27 @@ app.listen(PORT, () => {
 
 
 const TARGET_CHAT_ID = '6285694193698@c.us';
-const qrDir = path.join(__dirname, 'public');
-if (!fs.existsSync(qrDir)) {
-    fs.mkdirSync(qrDir);
-}
-QRCode.toFile(path.join(qrDir, 'qr.png'), qr, {
-    width: 300
-}, function (err) {
-    if (err) {
-        console.error('❌ Gagal menyimpan QR:', err.message);
-    } else {
-        console.log('🖼️ QR Code berhasil disimpan!');
+
+client.on('qr', (qr) => {
+    console.log('📲 QR Code siap, silakan scan');
+    qrcode.generate(qr, { small: true });
+
+    // Pastikan folder ada
+    const qrDir = path.join(__dirname, 'public');
+    if (!fs.existsSync(qrDir)) {
+        fs.mkdirSync(qrDir, { recursive: true });
     }
+
+    QRCode.toFile(path.join(qrDir, 'qr.png'), qr, {
+        width: 300
+    }, function (err) {
+        if (err) {
+            console.error('❌ Gagal menyimpan QR:', err.message);
+        } else {
+            console.log('🖼️ QR Code berhasil disimpan!');
+        }
+    });
 });
-
-
 client.on('ready', () => {
     console.log('✅ bot siap digunakan!');
 
