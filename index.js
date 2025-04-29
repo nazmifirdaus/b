@@ -39,11 +39,11 @@ client.on('qr', async (qr) => {
     } catch (err) {
         console.error('❌ Gagal menyimpan QR:', err);
     }
+});
 
 client.on('ready', () => {
     console.log('✅ Bot WhatsApp sudah siap!');
 });
-
     cron.schedule('0 5 * * *', () => {
         setTimeout(() => {
             client.sendMessage(TARGET_CHAT_ID, 'selamat pagiii sayangg 😘 semangat ya harinya, aku tahu hari ini bakal jadi hari yang seru banget buat kamu! 🥳');
