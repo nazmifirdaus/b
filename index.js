@@ -45,42 +45,112 @@ client.on('qr', (qr) => {
 
 client.on('ready', () => {
     console.log('✅ Bot WhatsApp sudah siap!');
-});
-cron.schedule('0 5 * * *', () => {
-    setTimeout(() => {
-        client.sendMessage(TARGET_CHAT_ID, 'selamat pagiii sayangg 😘 semangat ya harinya, aku tahu hari ini bakal jadi hari yang seru banget buat kamu! 🥳');
-    }, 5000);
-});
 
-    cron.schedule('47 11 * * *', () => {
+    cron.schedule('0 22 * * *', () => {
         setTimeout(() => {
-            client.sendMessage(TARGET_CHAT_ID, 'selamat mam yaaa, jangan lupa sholat yaaah 😇 semoga harimu menyenangkan babaiiii?');
+            client.sendMessage(TARGET_CHAT_ID, 'selamat pagiii sayangg 😘 semangat ya harinya, aku tahu hari ini bakal jadi hari yang seru banget buat kamu! 🥳');
         }, 5000);
     });
 
-    cron.schedule('30 18 * * *', () => {
+    cron.schedule('47 4 * * *', () => {
+        setTimeout(() => {
+            client.sendMessage(TARGET_CHAT_ID, 'selamat mam yaaa, jangan lupa sholat yaaaa bb 😇 semoga harimu menyenangkan babaiiii?');
+        }, 5000);
+    });
+
+    cron.schedule('30 11 * * *', () => {
         setTimeout(() => {
             client.sendMessage(TARGET_CHAT_ID, 'oiiii mandiii 🛁 jangan malesan! mau ngapain hari ini? ada rencana spesial?');
         }, 5000);
     });
 
-    cron.schedule('0 17 * * *', () => {
+    cron.schedule('0 10 * * *', () => {
         setTimeout(() => {
             client.sendMessage(TARGET_CHAT_ID, 'aku udaahh pulangg 😁 bolee cita tidaaa? aku kangen banget nih! 🤗');
         }, 5000);
     });
 
-    cron.schedule('49 21 * * *', () => {
+    cron.schedule('49 14 * * *', () => {
         setTimeout(() => {
-            client.sendMessage(TARGET_CHAT_ID, 'boleee call? 😳 pengen denger suaramu, lagi ngapain?');
+            client.sendMessage(TARGET_CHAT_ID, 'boleee call? 😳 pengen denger suaramu, akuu mauu ceritaa');
         }, 5000);
     });
 
-    cron.schedule('20 22 * * *', () => {
+    cron.schedule('20 15 * * *', () => {
         setTimeout(() => {
             client.sendMessage(TARGET_CHAT_ID, 'good night yaaa 💗 have a sweet dream 😴 semoga tidurmu nyenyak dan bangun besok lebih bahagia!');
         }, 5000);
     });
+
+   // 00:50 UTC (07:50 WIB)
+cron.schedule('50 0 * * *', () => {
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'ehh kamu udah bangun belom sihh?? 😝 kalau belum, bangunn dongg! aku kangen suara kamu 🥺');
+    }, 5000);
+});
+
+// 04:02 UTC (11:02 WIB)
+cron.schedule('2 4 * * *', () => {
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'ih jam segini tuh enaknya mikirin kamu sambil peluk bantal 😚 kamu lagi ngapain yaa~');
+    }, 5000);
+});
+
+// 04:30 UTC (11:30 WIB)
+cron.schedule('30 4 * * *', () => {
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'udah mam belommm?? 😡 jangan bikin aku cerewet dong, ayo mam! ✨');
+    }, 5000);
+});
+
+// 06:21 UTC (13:21 WIB)
+cron.schedule('21 6 * * *', () => {
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'abis makan siang tuh peluk aku, bukan rebahan sendirian 😤 sini peluk online dulu pelukk 🤗');
+    }, 5000);
+});
+
+// 07:14 UTC (14:14 WIB)
+cron.schedule('14 7 * * *', () => {
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'aku udah pulangg nii,ak kangen kmu tauuk aku mau call pasti kamu sibuk yaaa😤');
+    }, 5000);
+});
+
+// 08:40 UTC (15:40 WIB)
+cron.schedule('40 8 * * *', () => {
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'udah soreee 😗 kamu cape gak? aku siap jadi cemilannya kamu~ eh salah, cemilan sore maksudnya 🙈');
+    }, 5000);
+});
+
+// 09:12 UTC (16:12 WIB)
+cron.schedule('12 9 * * *', () => {
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'udah jam 4 lebih, jangan lupa stretching yaa 😎 biar ga pegel terus bisa peluk aku lebih lama 🥰');
+    }, 5000);
+});
+
+// 13:10 UTC (20:10 WIB)
+cron.schedule('10 13 * * *', () => {
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'udah malem... waktunya peluk dan manja-manja 😚 sini sayang, aku siap denger semua curhatmu 💬💕');
+    }, 5000);
+});
+
+});
+// === Tambahkan Express server DI SINI ===
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+    res.send('✅ WhatsApp bot aktif & cron jalan!');
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`🌐 Server aktif di port ${PORT}`);
+});
 
 client.on('message', async (message) => {
     console.log('📩 pesan masuk:', message.body);
