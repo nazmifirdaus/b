@@ -1,12 +1,12 @@
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const QRCode = require('qrcode');
 const cron = require('node-cron');
-
-require('dotenv').config();
 const TARGET_CHAT_ID = process.env.TARGET_CHAT_ID;
+console.log(process.env.TARGET_CHAT_ID); // Harus mencetak nomor WhatsApp yang benar
 
 const client = new Client({
     authStrategy: new LocalAuth(),
@@ -46,99 +46,107 @@ client.on('qr', (qr) => {
 client.on('ready', () => {
     console.log('✅ Bot WhatsApp sudah siap!');
 
-    cron.schedule('0 22 * * *', () => {
-        setTimeout(() => {
-            client.sendMessage(TARGET_CHAT_ID, 'selamat pagiii sayangg 😘 semangat ya harinya, aku tahu hari ini bakal jadi hari yang seru banget buat kamu! 🥳');
-        }, 5000);
-    });
+    // Set cron job untuk mengirim pesan otomatis setiap jam
+cron.schedule('0 23 * * *', () => {  // 06:00 WIB -> 23:00 UTC
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'selamat pagiii sayangg 😘 semangat ya harinya, aku tahu hari ini bakal jadi hari yang seru banget buat kamu! 🥳');
+    }, 5000); // Delay 5 detik
+});
 
-    cron.schedule('47 4 * * *', () => {
-        setTimeout(() => {
-            client.sendMessage(TARGET_CHAT_ID, 'selamat mam yaaa, jangan lupa sholat yaaaa bb 😇 semoga harimu menyenangkan babaiiii?');
-        }, 5000);
-    });
+cron.schedule('40 4 * * *', () => {  // 11:40 WIB -> 04:40 UTC
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'selamat mam yaaa, jangan lupa sholat yaaaa bb 😇 semoga harimu menyenangkan babaiiii?');
+    }, 5000); // Delay 5 detik
+});
 
-    cron.schedule('30 11 * * *', () => {
-        setTimeout(() => {
-            client.sendMessage(TARGET_CHAT_ID, 'oiiii mandiii 🛁 jangan malesan! mau ngapain hari ini? ada rencana spesial?');
-        }, 5000);
-    });
+cron.schedule('41 10 * * *', () => {  // 17:41 WIB -> 10:41 UTC
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'oiiii mandiii 🛁 jangan malesan! mau ngapain hari ini? ada rencana spesial?');
+    }, 5000); // Delay 5 detik
+});
 
-    cron.schedule('0 10 * * *', () => {
-        setTimeout(() => {
-            client.sendMessage(TARGET_CHAT_ID, 'aku udaahh pulangg 😁 bolee cita tidaaa? aku kangen banget nih! 🤗');
-        }, 5000);
-    });
+cron.schedule('10 7 * * *', () => {  // 14:10 WIB -> 07:10 UTC
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'aku udaahh pulangg 😁 bolee cita tidaaa? aku kangen banget nih! 🤗');
+    }, 5000); // Delay 5 detik
+});
 
-    cron.schedule('49 14 * * *', () => {
-        setTimeout(() => {
-            client.sendMessage(TARGET_CHAT_ID, 'boleee call? 😳 pengen denger suaramu, akuu mauu ceritaa');
-        }, 5000);
-    });
+cron.schedule('21 13 * * *', () => {  // 20:21 WIB -> 13:21 UTC
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'boleee call? 😳 pengen denger suaramu, akuu mauu ceritaa');
+    }, 5000); // Delay 5 detik
+});
 
-    cron.schedule('20 15 * * *', () => {
-        setTimeout(() => {
-            client.sendMessage(TARGET_CHAT_ID, 'good night yaaa 💗 have a sweet dream 😴 semoga tidurmu nyenyak dan bangun besok lebih bahagia!');
-        }, 5000);
-    });
+cron.schedule('10 16 * * *', () => {  // 23:10 WIB -> 16:10 UTC
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'good night yaaa 💗 have a sweet dream 😴 semoga tidurmu nyenyak dan bangun besok lebih bahagia!');
+    }, 5000); // Delay 5 detik
+});
 
    // 00:50 UTC (07:50 WIB)
 cron.schedule('50 0 * * *', () => {
     setTimeout(() => {
         client.sendMessage(TARGET_CHAT_ID, 'ehh kamu udah bangun belom sihh?? 😝 kalau belum, bangunn dongg! aku kangen suara kamu 🥺');
-    }, 5000);
+    }, 5000); // Delay 5 detik
 });
 
 // 04:02 UTC (11:02 WIB)
 cron.schedule('2 4 * * *', () => {
     setTimeout(() => {
         client.sendMessage(TARGET_CHAT_ID, 'ih jam segini tuh enaknya mikirin kamu sambil peluk bantal 😚 kamu lagi ngapain yaa~');
-    }, 5000);
+    }, 5000); // Delay 5 detik
 });
 
 // 04:30 UTC (11:30 WIB)
 cron.schedule('30 4 * * *', () => {
     setTimeout(() => {
         client.sendMessage(TARGET_CHAT_ID, 'udah mam belommm?? 😡 jangan bikin aku cerewet dong, ayo mam! ✨');
-    }, 5000);
+    }, 5000); // Delay 5 detik
 });
 
 // 06:21 UTC (13:21 WIB)
 cron.schedule('21 6 * * *', () => {
     setTimeout(() => {
         client.sendMessage(TARGET_CHAT_ID, 'abis makan siang tuh peluk aku, bukan rebahan sendirian 😤 sini peluk online dulu pelukk 🤗');
-    }, 5000);
+    }, 5000); // Delay 5 detik
 });
 
 // 07:14 UTC (14:14 WIB)
 cron.schedule('14 7 * * *', () => {
     setTimeout(() => {
-        client.sendMessage(TARGET_CHAT_ID, 'aku udah pulangg nii,ak kangen kmu tauuk aku mau call pasti kamu sibuk yaaa😤');
-    }, 5000);
+        client.sendMessage(TARGET_CHAT_ID, 'aku udah pulangg nii, ak kangen kmu tauuk aku mau call pasti kamu sibuk yaaa😤');
+    }, 5000); // Delay 5 detik
 });
 
 // 08:40 UTC (15:40 WIB)
 cron.schedule('40 8 * * *', () => {
     setTimeout(() => {
         client.sendMessage(TARGET_CHAT_ID, 'udah soreee 😗 kamu cape gak? aku siap jadi cemilannya kamu~ eh salah, cemilan sore maksudnya 🙈');
-    }, 5000);
+    }, 5000); // Delay 5 detik
 });
 
 // 09:12 UTC (16:12 WIB)
 cron.schedule('12 9 * * *', () => {
     setTimeout(() => {
         client.sendMessage(TARGET_CHAT_ID, 'udah jam 4 lebih, jangan lupa stretching yaa 😎 biar ga pegel terus bisa peluk aku lebih lama 🥰');
-    }, 5000);
+    }, 5000); // Delay 5 detik
 });
 
 // 13:10 UTC (20:10 WIB)
 cron.schedule('10 13 * * *', () => {
     setTimeout(() => {
         client.sendMessage(TARGET_CHAT_ID, 'udah malem... waktunya peluk dan manja-manja 😚 sini sayang, aku siap denger semua curhatmu 💬💕');
-    }, 5000);
+    }, 5000); // Delay 5 detik
 });
 
+// 01:50 UTC (08:50 WIB)
+cron.schedule('50 1 * * *', () => {
+    setTimeout(() => {
+        client.sendMessage(TARGET_CHAT_ID, 'kamuu lagii apaa?udah sarapan belumm kalo belum sarapan duluu yaa mam yang banyak & jangan lupa duha jangan ditinggall yaaa  ');
+    }, 5000); // Delay 5 detik
 });
+});
+
 // === Tambahkan Express server DI SINI ===
 const express = require('express');
 const app = express();
@@ -866,6 +874,20 @@ if (
             replyText = 'ihh becanda tauu akuu,kamu marah ma aku yaa?';
         } else if (msg.includes('g') || msg.includes('ga')) {
             replyText = 'SO CUEK LU JAMETT';
+        } else if (msg.includes('y') || msg.includes('y')) {
+            replyText = 'y';
+        } else if (msg.includes('cukup tau') || msg.includes('cukup tauu')) {
+            replyText = 'ihhh apasihh becanda doangg akuu baperan bangett kamu mahh';
+        } else if (msg.includes('yauda') || msg.includes('yauda')) {
+            replyText = 'benerann bb';
+        } else if (msg.includes('bantuin aku') || msg.includes('bantu')) {
+            replyText = 'usaha sendiri laahh,nanya aku mulu kapan pinternya kamu';
+        } else if (msg.includes('pelit ilmu') || msg.includes('bilang aja ga ngerti')) {
+            replyText = 'biarin';
+        
+        
+        
+        
             
         // ⬆️ Tambahan auto-reply berakhir di sini
 
@@ -928,4 +950,3 @@ if (
 });
 
 client.initialize();
-
